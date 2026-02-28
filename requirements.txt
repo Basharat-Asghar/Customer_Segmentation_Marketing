@@ -7,4 +7,4 @@ joblib
 pyYaml
 #jupyter
 #ipykernel
--e .
+# -e .
