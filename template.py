@@ -30,7 +30,7 @@ list_of_files = [
     "src/entity/__init__.py",
     "src/entity/config_entity.py",
     "src/constants/__init__.py",
-    "notebooks/",
+    "notebooks/temp.py",
     "templates/index.html",
     "params.yaml",
     "schema.yaml",
