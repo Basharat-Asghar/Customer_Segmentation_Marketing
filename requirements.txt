@@ -5,6 +5,9 @@ scikit-learn
 flask
 joblib
 pyYaml
+pymysql
+sqlalchemy
+python-box
 #jupyter
 #ipykernel
 # -e .

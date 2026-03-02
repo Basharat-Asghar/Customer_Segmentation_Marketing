@@ -1,0 +1,9 @@
+data_ingestion:
+  root_dir: data
+  db_host: localhost
+  db_port: 3306
+  db_user: root
+  db_password: 1234
+  db_name: students
+  db_table: student_segmentation_data
+  raw_data_path: data/raw/raw_student_data.csv

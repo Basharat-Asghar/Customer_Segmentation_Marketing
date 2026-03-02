@@ -37,6 +37,7 @@ list_of_files = [
     "app.py",
     "requirements.txt",
     "setup.py",
+    "main.py",
 ]
 
 BASE_DIR = Path(__file__).resolve().parent

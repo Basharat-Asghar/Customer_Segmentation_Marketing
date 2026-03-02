@@ -6,6 +6,7 @@ import json
 import shutil
 from typing import Any
 from pathlib import Path
+from box import ConfigBox
 
 from src.utils.logger import get_logger
 from src.utils.exception import CustomException
@@ -18,9 +19,9 @@ logger = get_logger(__name__)
 # YAML Utilities
 # --------------------------------------------------
 
-def read_yaml(file_path: Path) -> dict:
+def read_yaml(file_path: Path) -> ConfigBox:
     """
-    Read YAML file and return content as dictionary.
+    Read YAML file and return content as ConfigBox.
     """
 
     try:
@@ -28,7 +29,7 @@ def read_yaml(file_path: Path) -> dict:
             content = yaml.safe_load(f)
 
         logger.info(f"YAML file loaded: {file_path}")
-        return content
+        return ConfigBox(content)
 
     except Exception as e:
         raise CustomException("Failed to read YAML file", sys) from e
