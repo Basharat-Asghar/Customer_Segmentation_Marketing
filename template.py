@@ -11,6 +11,7 @@ list_of_files = [
     "src/components/__init__.py",
     "src/components/data/__init__.py",
     "src/components/data/data_loader.py",
+    "src/components/data/data_validator.py",
     "src/components/data/data_cleaner.py",
     "src/components/features/__init__.py",
     "src/components/features/feature_engineering.py",

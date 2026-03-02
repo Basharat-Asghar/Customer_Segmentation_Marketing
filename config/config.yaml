@@ -1,5 +1,5 @@
 data_ingestion:
-  root_dir: data
+  root_dir: data/raw
   db_host: localhost
   db_port: 3306
   db_user: root
@@ -7,3 +7,8 @@ data_ingestion:
   db_name: students
   db_table: student_segmentation_data
   raw_data_path: data/raw/raw_student_data.csv
+
+data_validation:
+  root_dir: data/validated
+  valid_data_path: data/validated/validated_student_data.csv
+  report_file_path: data/validated/report.json

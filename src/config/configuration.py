@@ -1,18 +1,27 @@
-from src.constants import CONFIG_FILE_PATH
+from src.constants import *
 from src.utils.common import read_yaml, create_directories
-from src.entity.config_entity import DataIngestionConfig
+from src.entity.config_entity import (DataIngestionConfig,
+                                        DataValidationConfig)
 from src.utils.exception import CustomException
 
 import sys
 
 class ConfigurationManager:
-    def __init__(self, config_file_path: str = CONFIG_FILE_PATH):
+    def __init__(
+            self,
+            config_file_path = CONFIG_FILE_PATH,
+            params_file_path = PARAMS_FILE_PATH,
+            schema_file_path = SCHEMA_FILE_PATH):
+        
         self.config = read_yaml(config_file_path)
-        create_directories([self.config.data_ingestion.root_dir])
+        self.params = read_yaml(params_file_path)
+        self.schema = read_yaml(schema_file_path)
 
     def get_data_ingestion_config(self) -> DataIngestionConfig:
         try:
             config = self.config.data_ingestion
+
+            create_directories([self.config.data_ingestion.root_dir])
 
             data_ingestion_config = DataIngestionConfig(
                 root_dir=config.root_dir,
@@ -28,3 +37,21 @@ class ConfigurationManager:
             return data_ingestion_config
         except Exception as e:
             raise CustomException("Error in getting Data Ingestion Config", sys)
+        
+    def get_data_validation_config(self) -> DataValidationConfig:
+        try:
+            config = self.config.data_validation
+            schema = self.schema.COLUMNS
+            create_directories([self.config.data_validation.root_dir])
+
+            data_validation_config = DataValidationConfig(
+                root_dir=config.root_dir,
+                valid_data_path=config.valid_data_path,
+                report_file_path=config.report_file_path,
+                all_schema = schema
+            )
+
+            return data_validation_config
+
+        except Exception as e:
+            raise CustomException("Error in getting Data Validation Config", sys)

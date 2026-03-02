@@ -1,0 +1,5 @@
+COLUMNS:
+  minutes_watched: int64
+  CLV: float64
+  region: int64
+  channel: int64
