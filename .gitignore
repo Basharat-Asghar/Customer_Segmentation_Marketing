@@ -208,3 +208,9 @@ __marimo__/
 
 # VS Code settings
 .vscode/
+
+# data
+data/
+
+# artifacts
+artifacts/
