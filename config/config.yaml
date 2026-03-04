@@ -12,3 +12,10 @@ data_validation:
   root_dir: data/validated
   valid_data_path: data/validated/validated_student_data.csv
   report_file_path: data/validated/report.json
+
+data_cleaning:
+  root_dir: data/cleaned
+  cleaned_data_path: data/cleaned/cleaned_student_data.csv
+  duplicate_strategy: drop
+  missing_value_strategy: median
+  missing_columns: ['minutes_watched']

@@ -1,7 +1,8 @@
 from src.constants import *
 from src.utils.common import read_yaml, create_directories
 from src.entity.config_entity import (DataIngestionConfig,
-                                        DataValidationConfig)
+                                        DataValidationConfig,
+                                        DataCleaningConfig)
 from src.utils.exception import CustomException
 
 import sys
@@ -55,3 +56,22 @@ class ConfigurationManager:
 
         except Exception as e:
             raise CustomException("Error in getting Data Validation Config", sys)
+        
+    def get_data_cleaning_config(self) -> DataCleaningConfig:
+        try:
+            config = self.config.data_cleaning
+
+            create_directories([self.config.data_cleaning.root_dir])
+
+            data_cleaning_config = DataCleaningConfig(
+                root_dir=config.root_dir,
+                cleaned_data_path=config.cleaned_data_path,
+                duplicate_strategy=config.duplicate_strategy,
+                missing_value_strategy=config.missing_value_strategy,
+                missing_columns=config.missing_columns 
+            )
+
+            return data_cleaning_config
+        
+        except Exception as e:
+            raise CustomException("Error in getting Data Cleaning Config", sys)
