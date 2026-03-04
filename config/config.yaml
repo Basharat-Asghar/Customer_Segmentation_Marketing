@@ -28,3 +28,10 @@ feature_engineering:
   engagement_labels: [0, 1, 2, 3, 4]
   clv_bins: [-9999999999, 0, 62.58, 119.0, 149.99, 9999999999]
   clv_labels: [0, 1, 2, 3, 4]
+
+data_transformation:
+  root_dir: data/transformed
+  transformed_data_path: data/transformed/transformed_student_data.csv
+  scaler: standard
+  preprocessor_path: artifacts/preprocessor.pkl
+  clustering_features: ["log_minutes", "log_clv"]

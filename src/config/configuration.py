@@ -3,7 +3,8 @@ from src.utils.common import read_yaml, create_directories
 from src.entity.config_entity import (DataIngestionConfig,
                                         DataValidationConfig,
                                         DataCleaningConfig,
-                                        FeatureEngineeringConfig)
+                                        FeatureEngineeringConfig,
+                                        DataTransformationConfig)
 from src.utils.exception import CustomException
 
 import sys
@@ -97,3 +98,22 @@ class ConfigurationManager:
 
         except Exception as e:
             raise CustomException("Error in getting Feature Engineering Config", sys)
+        
+    def get_data_transformation_config(self) -> DataTransformationConfig:
+        try:
+            config = self.config.data_transformation
+
+            create_directories([config.root_dir])
+
+            data_transformation_config = DataTransformationConfig(
+                root_dir=config.root_dir,
+                transformed_data_path=config.transformed_data_path,
+                scaler=config.scaler,
+                preprocessor_path=config.preprocessor_path,
+                clustering_features=config.clustering_features
+            )
+
+            return data_transformation_config
+
+        except Exception as e:
+            raise CustomException("Error in getting Data Transformation Config", sys)

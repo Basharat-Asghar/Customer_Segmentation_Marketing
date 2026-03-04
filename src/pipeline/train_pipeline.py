@@ -5,6 +5,7 @@ from src.components.data.data_loader import DataIngestion
 from src.components.data.data_validator import DataValidation
 from src.components.data.data_cleaner import DataCleaner
 from src.components.features.feature_engineering import FeatureEngineering
+from src.components.data.data_transformation import DataTransformation
 
 import sys
 
@@ -48,6 +49,14 @@ class TrainPipeline:
             logger.info(f">>>>>> Feature Engineering completed. Featured data saved at: {featured_data_path} <<<<<<\nx==========x")
 
             # Step 5: Data Transformation
+            logger.info(f">>>>>> Step 5: Data Transformation Started... <<<<<<")
+            data_transformation_config = config.get_data_transformation_config()
+            data_transformer = DataTransformation(config=data_transformation_config)
+            transformed_data_path, preprocessor_path = (
+                data_transformer.initiate_data_transformation(featured_data_path)
+            )
+            logger.info(f">>>>>> Data Transformation completed. Transformed data saved at: {transformed_data_path} <<<<<<\n")
+            logger.info(f"Preprocessor object saved at: {preprocessor_path} <<<<<<\nx==========x")
 
         except Exception as e:
             raise CustomException("Error in Training Pipeline", sys)

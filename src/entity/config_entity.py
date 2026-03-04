@@ -36,3 +36,11 @@ class FeatureEngineeringConfig:
     engagement_labels: list
     clv_bins: list
     clv_labels: list
+
+@dataclass(frozen=True)
+class DataTransformationConfig:
+    root_dir: Path
+    transformed_data_path: Path
+    scaler: str
+    preprocessor_path: Path
+    clustering_features: list
