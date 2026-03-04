@@ -12,7 +12,7 @@ class DataCleaner:
     def __init__(self, config: DataCleaningConfig):
         self.config = config
 
-    def clean(self, validated_data_path: str) -> pd.DataFrame:
+    def clean(self, validated_data_path: str):
         """
         Apply all cleaning steps to the raw DataFrame.
 

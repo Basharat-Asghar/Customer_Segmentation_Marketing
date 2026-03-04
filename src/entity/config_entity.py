@@ -26,3 +26,13 @@ class DataCleaningConfig:
     duplicate_strategy: str
     missing_value_strategy: str
     missing_columns: list
+
+@dataclass(frozen=True)
+class FeatureEngineeringConfig:
+    root_dir: Path
+    featured_data_path: Path
+    log_transform_columns: list
+    engagement_bins: list
+    engagement_labels: list
+    clv_bins: list
+    clv_labels: list

@@ -4,6 +4,7 @@ from src.config.configuration import ConfigurationManager
 from src.components.data.data_loader import DataIngestion
 from src.components.data.data_validator import DataValidation
 from src.components.data.data_cleaner import DataCleaner
+from src.components.features.feature_engineering import FeatureEngineering
 
 import sys
 
@@ -38,6 +39,15 @@ class TrainPipeline:
             data_cleaner = DataCleaner(config=data_cleaning_config)
             cleaned_data_path = data_cleaner.clean(validated_data_path)
             logger.info(f">>>>>> Data Cleaning completed. Cleaned data saved at: {cleaned_data_path} <<<<<<\nx==========x")
+
+            # Step 4: Feature Engineering
+            logger.info(f">>>>>> Step 4: Feature Engineering Started... <<<<<<")
+            feature_engineering_config = config.get_feature_engineering_config()
+            feature_engineer = FeatureEngineering(config=feature_engineering_config)
+            featured_data_path = feature_engineer.engineer_features(cleaned_data_path)
+            logger.info(f">>>>>> Feature Engineering completed. Featured data saved at: {featured_data_path} <<<<<<\nx==========x")
+
+            # Step 5: Data Transformation
 
         except Exception as e:
             raise CustomException("Error in Training Pipeline", sys)
