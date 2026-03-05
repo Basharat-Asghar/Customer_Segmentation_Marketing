@@ -56,7 +56,7 @@ class ModelTrainer:
                     best_k = k
                     best_score = score
 
-                return best_k, inertia_values, silhouette_scores
+            return best_k, inertia_values, silhouette_scores
 
         except Exception as e:
             raise CustomException("Error in finding best k for KMeans", sys)
@@ -83,6 +83,14 @@ class ModelTrainer:
             )
 
             final_model.fit(X)
+            cluster_labels = final_model.labels_
+            df['cluster'] = cluster_labels
+
+            df.to_csv(
+                self.config.clustered_data_path,
+                index=False
+            )
+            logger.info(f"Clustered data saved to: {self.config.clustered_data_path}")
 
             save_object(
                 self.config.model_path,
@@ -101,7 +109,7 @@ class ModelTrainer:
             )
             logger.info(f"Metrics saved to: {self.config.metrics_path}")
 
-            return self.config.model_path
+            return self.config.model_path, df
 
         except Exception as e:
             raise CustomException("Error in training model", sys)

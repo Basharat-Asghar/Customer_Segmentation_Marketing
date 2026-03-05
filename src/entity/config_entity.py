@@ -50,6 +50,7 @@ class ModelTrainerConfig:
     root_dir: Path
     model_path: Path
     metrics_path: Path
+    clustered_data_path: Path
     clustering_features: list
     max_k: int
     init: str

@@ -131,6 +131,7 @@ class ConfigurationManager:
                 root_dir=config.root_dir,
                 model_path=config.model_path,
                 metrics_path=config.metrics_path,
+                clustered_data_path=config.clustered_data_path,
                 clustering_features=config.clustering_features,
                 max_k=config.max_k,
                 init=params.init,
