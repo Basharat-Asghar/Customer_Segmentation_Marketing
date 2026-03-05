@@ -1,11 +1,13 @@
 from src.utils.logger import get_logger
 from src.utils.exception import CustomException
 from src.config.configuration import ConfigurationManager
+
 from src.components.data.data_loader import DataIngestion
 from src.components.data.data_validator import DataValidation
 from src.components.data.data_cleaner import DataCleaner
 from src.components.features.feature_engineering import FeatureEngineering
 from src.components.data.data_transformation import DataTransformation
+from src.components.models.model_trainer import ModelTrainer
 
 import sys
 
@@ -57,6 +59,12 @@ class TrainPipeline:
             )
             logger.info(f">>>>>> Data Transformation completed. Transformed data saved at: {transformed_data_path} <<<<<<\n")
             logger.info(f"Preprocessor object saved at: {preprocessor_path} <<<<<<\nx==========x")
+
+            # Step 6: Model Training
+            logger.info(f">>>>>> Step 6: Model Training Started... <<<<<<")
+            model_trainer_config = config.get_model_trainer_config()
+            model_trainer = ModelTrainer(config=model_trainer_config)
+            trained_model_path = model_trainer.train_model(transformed_data_path)
 
         except Exception as e:
             raise CustomException("Error in Training Pipeline", sys)

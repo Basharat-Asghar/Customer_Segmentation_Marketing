@@ -44,3 +44,15 @@ class DataTransformationConfig:
     scaler: str
     preprocessor_path: Path
     clustering_features: list
+
+@dataclass(frozen=True)
+class ModelTrainerConfig:
+    root_dir: Path
+    model_path: Path
+    metrics_path: Path
+    clustering_features: list
+    max_k: int
+    init: str
+    n_init: int
+    max_iter: int
+    random_state: int

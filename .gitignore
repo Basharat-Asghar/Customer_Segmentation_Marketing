@@ -210,7 +210,7 @@ __marimo__/
 .vscode/
 
 # data
-data/
+/data/
 
 # artifacts
 artifacts/

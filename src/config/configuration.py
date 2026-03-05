@@ -4,7 +4,8 @@ from src.entity.config_entity import (DataIngestionConfig,
                                         DataValidationConfig,
                                         DataCleaningConfig,
                                         FeatureEngineeringConfig,
-                                        DataTransformationConfig)
+                                        DataTransformationConfig,
+                                        ModelTrainerConfig)
 from src.utils.exception import CustomException
 
 import sys
@@ -117,3 +118,28 @@ class ConfigurationManager:
 
         except Exception as e:
             raise CustomException("Error in getting Data Transformation Config", sys)
+        
+
+    def get_model_trainer_config(self) -> ModelTrainerConfig:
+        try:
+            config = self.config.model_trainer
+            params = self.params.KMeans
+
+            create_directories([config.root_dir])
+
+            model_trainer_config = ModelTrainerConfig(
+                root_dir=config.root_dir,
+                model_path=config.model_path,
+                metrics_path=config.metrics_path,
+                clustering_features=config.clustering_features,
+                max_k=config.max_k,
+                init=params.init,
+                n_init=params.n_init,
+                max_iter=params.max_iter,
+                random_state=params.random_state
+            )
+
+            return model_trainer_config
+
+        except Exception as e:
+            raise CustomException("Error in getting Model Trainer Config", sys)

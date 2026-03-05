@@ -1,1 +1,5 @@
-key: val
+KMeans:
+  init: k-means++
+  n_init: 50
+  max_iter: 300
+  random_state: 42
