@@ -69,6 +69,7 @@ class ConfigurationManager:
             data_cleaning_config = DataCleaningConfig(
                 root_dir=config.root_dir,
                 cleaned_data_path=config.cleaned_data_path,
+                report_file_path=config.report_file_path,
                 duplicate_strategy=config.duplicate_strategy,
                 missing_value_strategy=config.missing_value_strategy,
                 missing_columns=config.missing_columns 
@@ -123,21 +124,19 @@ class ConfigurationManager:
     def get_model_trainer_config(self) -> ModelTrainerConfig:
         try:
             config = self.config.model_trainer
-            params = self.params.KMeans
+            params = self.params
 
             create_directories([config.root_dir])
 
             model_trainer_config = ModelTrainerConfig(
                 root_dir=config.root_dir,
-                model_path=config.model_path,
                 metrics_path=config.metrics_path,
-                clustered_data_path=config.clustered_data_path,
                 clustering_features=config.clustering_features,
                 max_k=config.max_k,
-                init=params.init,
-                n_init=params.n_init,
-                max_iter=params.max_iter,
-                random_state=params.random_state
+                kmeans=params.kmeans,
+                agglomerative=params.agglomerative,
+                gmm=params.gmm,
+                dbscan=params.dbscan
             )
 
             return model_trainer_config

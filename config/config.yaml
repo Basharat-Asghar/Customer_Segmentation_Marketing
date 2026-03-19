@@ -16,6 +16,7 @@ data_validation:
 data_cleaning:
   root_dir: data/cleaned
   cleaned_data_path: data/cleaned/cleaned_student_data.csv
+  report_file_path: data/validated/report.json
   duplicate_strategy: drop
   missing_value_strategy: median
   missing_columns: ['minutes_watched']
@@ -38,8 +39,13 @@ data_transformation:
 
 model_trainer:
   root_dir: artifacts/models
-  model_path: artifacts/models/kmeans_model.pkl
   metrics_path: artifacts/models/metrics.json
-  clustered_data_path: data/clustered/clustered_student_data.csv
   clustering_features: ["log_minutes_scaled", "log_clv_scaled"]
   max_k: 10
+
+model_evaluator:
+  metrics_path: artifacts/models/metrics.json
+  weights:
+    silhouette_scor: 0.40
+    davies_bouldin_score: 0.30
+    calinski_harabasz_score: 0.30

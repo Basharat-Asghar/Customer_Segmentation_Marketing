@@ -5,6 +5,7 @@ from pathlib import Path
 from src.utils.logger import get_logger
 from src.utils.exception import CustomException
 from src.entity.config_entity import DataCleaningConfig
+from src.utils.common import read_json
 
 logger = get_logger(__name__)
 
@@ -32,6 +33,10 @@ class DataCleaner:
         """
 
         try:
+            report = read_json(self.config.report_file_path)
+            if not report.get('status', False):
+                raise CustomException("Data Validation failed. Cannot proceed to cleaning.", sys)
+            
             df = pd.read_csv(validated_data_path)
             df_out = df.copy()
             initial_len = len(df_out)
@@ -94,4 +99,4 @@ class DataCleaner:
             return self.config.cleaned_data_path
 
         except Exception as e:
-            raise CustomException("Error in Data Cleaning", sys)
+            raise CustomException(f"Data cleaning failed: {e}", sys)

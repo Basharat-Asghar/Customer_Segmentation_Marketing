@@ -64,7 +64,11 @@ class TrainPipeline:
             logger.info(f">>>>>> Step 6: Model Training Started... <<<<<<")
             model_trainer_config = config.get_model_trainer_config()
             model_trainer = ModelTrainer(config=model_trainer_config)
-            trained_model_path, clustered_data_path = model_trainer.train_model(transformed_data_path)
+            metrics = model_trainer.train_all_models(transformed_data_path)
+            logger.info(f">>>>>> Model Training completed. Metrics saved at: {model_trainer_config.metrics_path} <<<<<<\nx==========x")
+
+            # Step 7: Model Evaluation and Selection
+            
 
         except Exception as e:
             raise CustomException("Error in Training Pipeline", sys)
