@@ -8,6 +8,8 @@ from src.components.data.data_cleaner import DataCleaner
 from src.components.features.feature_engineering import FeatureEngineering
 from src.components.data.data_transformation import DataTransformation
 from src.components.models.model_trainer import ModelTrainer
+from src.components.evaluation.model_evaluator import ModelEvaluator
+from src.components.personas.assign_personas import PersonaBuilder
 
 import sys
 
@@ -64,11 +66,27 @@ class TrainPipeline:
             logger.info(f">>>>>> Step 6: Model Training Started... <<<<<<")
             model_trainer_config = config.get_model_trainer_config()
             model_trainer = ModelTrainer(config=model_trainer_config)
-            metrics = model_trainer.train_all_models(transformed_data_path)
+            model_trainer.train_all_models(transformed_data_path)
             logger.info(f">>>>>> Model Training completed. Metrics saved at: {model_trainer_config.metrics_path} <<<<<<\nx==========x")
 
             # Step 7: Model Evaluation and Selection
-            
+            logger.info(f">>>>>> Step 7: Model Evaluation Started... <<<<<<")
+            model_evaluator_config = config.get_model_evaluator_config()
+            model_evaluator = ModelEvaluator(config=model_evaluator_config)
+            final_params = model_evaluator.select_best_model()
+            logger.info(f">>>>>> Model Evaluation and Selection is completed. Final model metadata is saved at: {model_evaluator_config.final_model_metrics} <<<<<<\nx==========x")
+
+            # Step 8: Final Model Training
+            logger.info(f">>>>>> Step 8: Final Model Training Started... <<<<<<")
+            final_model_path = model_trainer.train_final_model(transformed_data_path)
+            logger.info(f">>>>>> Final Model Training completed. Model saved at: {final_model_path} <<<<<<\nx==========x")
+
+            # Step 8: Persona Assignment
+            logger.info(f">>>>>> Step 9: Starting persona assignment... <<<<<<")
+            persona_assignment_config = config.get_persona_assignment_config()
+            persona_builder = PersonaBuilder(persona_assignment_config)
+            clustered_data_path = persona_builder.assign_personas(transformed_data_path, final_model_path)
+            logger.info(f">>>>>> Personas assigned to clusters, clustered data saved at: {clustered_data_path} <<<<<<\nx==========x")
 
         except Exception as e:
             raise CustomException("Error in Training Pipeline", sys)

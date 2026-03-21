@@ -5,7 +5,10 @@ from src.entity.config_entity import (DataIngestionConfig,
                                         DataCleaningConfig,
                                         FeatureEngineeringConfig,
                                         DataTransformationConfig,
-                                        ModelTrainerConfig)
+                                        ModelTrainerConfig,
+                                        ModelEvaluatorConfig,
+                                        PersonaAssignmentConfig,
+                                        PredictPipelineConfig)
 from src.utils.exception import CustomException
 
 import sys
@@ -130,7 +133,10 @@ class ConfigurationManager:
 
             model_trainer_config = ModelTrainerConfig(
                 root_dir=config.root_dir,
+                final_model=config.final_model,
                 metrics_path=config.metrics_path,
+                final_model_metadata=config.final_model_metadata,
+                clustered_data_path=config.clustered_data_path,
                 clustering_features=config.clustering_features,
                 max_k=config.max_k,
                 kmeans=params.kmeans,
@@ -143,3 +149,57 @@ class ConfigurationManager:
 
         except Exception as e:
             raise CustomException("Error in getting Model Trainer Config", sys)
+        
+    def get_model_evaluator_config(self) -> ModelEvaluatorConfig:
+        try:
+            config = self.config.model_evaluator
+
+            model_evaluator_config = ModelEvaluatorConfig(
+                metrics_path=config.metrics_path,
+                final_model_metrics=config.final_model_metrics,
+                weights=config.weights
+            )
+
+            return model_evaluator_config
+
+        except Exception as e:
+            raise CustomException("Error in getting Model Evaluator Config", sys)
+        
+    def get_persona_assignment_config(self) -> PersonaAssignmentConfig:
+        try:
+            config = self.config.persona_assignment
+
+            persona_assignment_config = PersonaAssignmentConfig(
+                clustered_data_path=config.clustered_data_path,
+                clustering_features=config.clustering_features,
+                personas=config.personas,
+                region=config.region,
+                channel=config.channel,
+                engagement_tier=config.engagement_tier,
+                clv_tier=config.clv_tier
+            )
+
+            return persona_assignment_config
+
+        except Exception as e:
+            raise CustomException("Error in getting Persona Assignment Config", sys)
+        
+    def get_predict_pipeline_config(self) -> PredictPipelineConfig:
+        try:
+            config = self.config.predict_pipeline
+
+            predict_pipeline_config = PredictPipelineConfig(
+                final_model_path=config.final_model_path,
+                preprocessor_path=config.preprocessor_path,
+                predicted_data=config.predicted_data,
+                log_transform_columns=config.log_transform_columns,
+                clustering_features=config.clustering_features,
+                personas=config.personas,
+                region=config.region,
+                channel=config.channel
+            )
+            
+            return predict_pipeline_config
+
+        except Exception as e:
+            raise CustomException("Error in getting Predict Pipeline Config", sys)

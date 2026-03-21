@@ -11,7 +11,7 @@ from sklearn.metrics import silhouette_score, davies_bouldin_score, calinski_har
 from src.utils.logger import get_logger
 from src.utils.exception import CustomException
 from src.entity.config_entity import ModelTrainerConfig
-from src.utils.common import write_json
+from src.utils.common import write_json, read_json, save_object
 
 logger = get_logger(__name__)
 
@@ -33,11 +33,13 @@ class ModelTrainer:
         if len(set(labels)) < 1:
             return {}
         
+        '''
         # Exclude noise points (DBSCAN label = -1) from metric computation
         if -1 in labels:
             mask = labels != -1
             X = X[mask]
             labels = labels[mask]
+        '''
         
         # Compute clustering metrics
         silhouette = silhouette_score(X, labels)
@@ -120,7 +122,8 @@ class ModelTrainer:
 
         except Exception as e:
             raise CustomException("Error in training Gaussian Mixture Model", sys)
-        
+
+    '''    
     def train_dbscan(self, X):
         try:
             logger.info("Training DBSCAN model...")
@@ -155,6 +158,7 @@ class ModelTrainer:
 
         except Exception as e:
             raise CustomException("Error in training DBSCAN model", sys)
+    '''
         
     def train_all_models(self, data_path: str) -> dict:
         try:
@@ -165,13 +169,13 @@ class ModelTrainer:
             kmeans_metrics = self.train_kmeans(X)
             agglomerative_metrics = self.train_agglomerative(X)
             gmm_metrics = self.train_gmm(X)
-            dbscan_metrics = self.train_dbscan(X)
+            #dbscan_metrics = self.train_dbscan(X)
 
             metrics = {
                 "kmeans": kmeans_metrics,
                 "agglomerative": agglomerative_metrics,
                 "gmm": gmm_metrics,
-                "dbscan": dbscan_metrics
+                #"dbscan": dbscan_metrics
             }
 
             write_json(
@@ -183,3 +187,86 @@ class ModelTrainer:
 
         except Exception as e:
             raise CustomException("Error in training model", sys)
+
+    def train_final_model(self, data_path: str):
+        try:
+            logger.info("Started Final Model Training...")
+            df = self._load_data(data_path)
+            X = df[self.config.clustering_features].values
+            model_metadata = read_json(self.config.final_model_metadata)
+
+            if model_metadata['model'] == 'kmeans':
+                kmeans = KMeans(
+                    n_clusters=model_metadata['clusters'],
+                    init=self.config.kmeans.init,
+                    n_init=self.config.kmeans.n_init,
+                    max_iter=self.config.kmeans.max_iter,
+                    random_state=self.config.kmeans.random_state
+                )
+
+                labels = kmeans.fit_predict(X)
+                df['cluster'] = labels
+
+                df.to_csv(
+                    self.config.clustered_data_path, index=False
+                )
+                logger.info(f"Clustered df saved at: {self.config.clustered_data_path}")
+
+                save_object(
+                    self.config.final_model,
+                    kmeans
+                )
+                logger.info(f"Final KMeans model saved at: {self.config.final_model}")
+
+                return self.config.final_model
+
+            elif model_metadata['model'] == 'agglomerative':
+                aggglomerative = AgglomerativeClustering(
+                    n_clusters=model_metadata['clusters'],
+                    metric=self.config.agglomerative.metric,
+                    linkage=self.config.agglomerative.linkage
+                )
+                aggglomerative.fit(X)
+                labels = aggglomerative.labels_
+                df['cluster'] = labels
+
+                df.to_csv(
+                    self.config.clustered_data_path, index=False
+                )
+                logger.info(f"Clustered df saved at: {self.config.clustered_data_path}")
+
+                save_object(
+                    self.config.final_model,
+                    aggglomerative
+                )
+                logger.info(f"Final Agglomerative model saved at: {self.config.final_model}")
+
+                return self.config.final_model
+
+            elif model_metadata['model'] == 'gmm':
+                gmm = GaussianMixture(
+                    n_components=model_metadata['clusters'],
+                    covariance_type=self.config.gmm.covariance_type,
+                    n_init=self.config.gmm.n_init,
+                    max_iter=self.config.gmm.max_iter,
+                    random_state=self.config.gmm.random_state
+                )
+                labels = gmm.fit_predict(X)
+                df['cluster'] = labels
+
+                df.to_csv(
+                    self.config.clustered_data_path, index=False
+                )
+                logger.info(f"Clustered df saved at: {self.config.clustered_data_path}")
+
+                save_object(
+                    self.config.final_model,
+                    gmm
+                )
+                logger.info(f"Final Gaussian Mixture Model saved at: {self.config.final_model}")
+
+                return self.config.final_model
+
+
+        except Exception as e:
+            raise CustomException("Failed to train final best model...")

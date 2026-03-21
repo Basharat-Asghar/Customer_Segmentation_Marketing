@@ -49,10 +49,40 @@ class DataTransformationConfig:
 @dataclass(frozen=True)
 class ModelTrainerConfig:
     root_dir: Path
+    final_model: Path
     metrics_path: Path
+    final_model_metadata: Path
+    clustered_data_path: Path
     clustering_features: list
     max_k: int
     kmeans: dict
     agglomerative: dict
     gmm: dict
     dbscan: dict
+
+@dataclass(frozen=True)
+class ModelEvaluatorConfig:
+    metrics_path: Path
+    final_model_metrics: Path
+    weights: dict
+
+@dataclass(frozen=True)
+class PersonaAssignmentConfig:
+    clustered_data_path: Path
+    clustering_features: list
+    personas: dict
+    region: dict
+    channel: dict
+    engagement_tier: dict
+    clv_tier: dict
+
+@dataclass(frozen=True)
+class PredictPipelineConfig:
+    final_model_path: Path
+    preprocessor_path: Path
+    predicted_data: Path
+    log_transform_columns: list
+    clustering_features: list
+    personas: dict
+    region: dict
+    channel: dict

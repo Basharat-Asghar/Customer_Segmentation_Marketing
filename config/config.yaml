@@ -39,13 +39,74 @@ data_transformation:
 
 model_trainer:
   root_dir: artifacts/models
+  final_model: artifacts/models/final_model.pkl
   metrics_path: artifacts/models/metrics.json
+  final_model_metadata: artifacts/models/final_model_metrics.json
+  clustered_data_path: data/clustered/clustered_student_data.csv
   clustering_features: ["log_minutes_scaled", "log_clv_scaled"]
   max_k: 10
 
 model_evaluator:
   metrics_path: artifacts/models/metrics.json
+  final_model_metrics: artifacts/models/final_model_metrics.json
   weights:
-    silhouette_scor: 0.40
+    silhouette_score: 0.40
     davies_bouldin_score: 0.30
     calinski_harabasz_score: 0.30
+
+persona_assignment:
+  clustered_data_path: data/clustered/clustered_student_data.csv
+  clustering_features: ["log_minutes_scaled", "log_clv_scaled"]
+  personas:
+    0: "The Driven Learner"
+    1: "The Passive Payer"
+    2: "The Champion"
+  region:
+    0: "US/CA/UK/AU"
+    1: "W. Europe"
+    2: "Rest of World"
+  channel:
+    1: "Google"
+    2: "Facebook"
+    3: "YouTube"
+    4: "LinkedIn"
+    5: "Twitter"
+    6: "Instagram"
+    7: "Friend"
+    8: "Other"
+  engagement_tier:
+    0: "Dormant"
+    1: "Low"
+    2: "Medium"
+    3: "High"
+    4: "Power"
+  clv_tier:
+    0: "Zero"
+    1: "Low"
+    2: "Mid-Low"
+    3: "Mid-High"
+    4: "Premium"
+
+predict_pipeline:
+  final_model_path: artifacts/models/final_model.pkl
+  preprocessor_path: artifacts/preprocessor.pkl
+  predicted_data: artifacts/prediction_results.json
+  log_transform_columns: ['minutes_watched', 'CLV']
+  clustering_features: ["log_minutes", "log_clv"]
+  personas:
+    0: "The Driven Learner"
+    1: "The Passive Payer"
+    2: "The Champion"
+  region:
+    0: "US/CA/UK/AU"
+    1: "W. Europe"
+    2: "Rest of World"
+  channel:
+    1: "Google"
+    2: "Facebook"
+    3: "YouTube"
+    4: "LinkedIn"
+    5: "Twitter"
+    6: "Instagram"
+    7: "Friend"
+    8: "Other"
