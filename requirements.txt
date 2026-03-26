@@ -2,12 +2,15 @@ pandas
 numpy
 scipy
 scikit-learn
-flask
+#flask
 joblib
 pyYaml
 pymysql
 sqlalchemy
 python-box
+fastapi
+pydantic
+uvicorn
 #jupyter
 #ipykernel
 # -e .

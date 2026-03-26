@@ -20,7 +20,7 @@ class PredictPipeline:
         try:
             logger.info("Loading artifacts...")
             preprocessor = load_object(self.config.preprocessor_path)
-            model = load_object(self.config.model_path)
+            model = load_object(self.config.final_model_path)
             logger.info("Artifacts loaded successfully...")
 
             return (
@@ -66,7 +66,7 @@ class PredictPipeline:
 
             write_json(
                 self.config.predicted_data,
-                df
+                df.to_dict(orient='records')
             )
             logger.info(f"Predictions saved at: {self.config.predicted_data}")
 
