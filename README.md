@@ -51,7 +51,7 @@ This project implements a full **customer segmentation system** using clustering
 ---
 
 # 📁 Project Structure
-
+```
 Customer_Segmetation_Marketing/
 ├── api/
 │ ├── main.py
@@ -75,7 +75,7 @@ Customer_Segmetation_Marketing/
 │ └── utils/
 ├── README.md
 └── requirements.txt
-
+```
 ---
 
 # 🧠 Data Schema
