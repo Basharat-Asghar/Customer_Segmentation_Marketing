@@ -214,3 +214,8 @@ __marimo__/
 
 # artifacts
 artifacts/
+
+# Frontend dependencies
+frontend/node_modules/
+frontend/dist/
+frontend/.env

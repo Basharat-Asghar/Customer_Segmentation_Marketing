@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+}
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.persona-card {
+  transition: all 0.3s ease;
+}
+
+.persona-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.input-field {
+  @apply w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all outline-none;
+}
+
+.btn-primary {
+  @apply px-6 py-3 bg-primary-600 text-white rounded-lg font-medium hover:bg-primary-700 transform hover:scale-105 transition-all shadow-lg hover:shadow-xl;
+}
+
+.cluster-badge-0 {
+  @apply bg-emerald-100 text-emerald-800 border-emerald-200;
+}
+
+.cluster-badge-1 {
+  @apply bg-amber-100 text-amber-800 border-amber-200;
+}
+
+.cluster-badge-2 {
+  @apply bg-violet-100 text-violet-800 border-violet-200;
+}
