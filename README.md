@@ -53,35 +53,28 @@ This project implements a full **customer segmentation system** using clustering
 # 📁 Project Structure
 
 Customer_Segmetation_Marketing/
-|
-|--- api/
-||--- api/main.py
-||--- api/schemas.py
-|
-|--- artifacts/
-||--- /models/
-|||--- model.pkl
-||--- preprocessor.pkl
-|
-|--- config/
-||--- config.yaml
-|--- data/
-|
-|--- frontend/
-||--- /src/
-|
-|--- notebooks/
-|
-|--- src/
-||--- /components/
-||--- /config/
-||--- /constants/
-||--- /entity/
-||--- /pipeline/
-||--- /utils/
-|
-|--- README.md
-|--- requirements.txt
+├── api/
+│ ├── main.py
+│ └── schemas.py
+├── artifacts/
+│ ├── models/
+│ │ └── model.pkl
+│ └── preprocessor.pkl
+├── config/
+│ └── config.yaml
+├── data/
+├── frontend/
+│ └── src/
+├── notebooks/
+├── src/
+│ ├── components/
+│ ├── config/
+│ ├── constants/
+│ ├── entity/
+│ ├── pipeline/
+│ └── utils/
+├── README.md
+└── requirements.txt
 
 ---
 
@@ -161,11 +154,11 @@ http://localhost:3000
 
 This project delivers a complete, production-ready ML-powered Customer Segmentation System featuring:
 
-✔ Full clustering pipeline
-✔ Persona assignment
-✔ FastAPI inference service
-✔ React prediction UI
-✔ Maintainable project structure
+- ✔ Full clustering pipeline
+- ✔ Persona assignment
+- ✔ FastAPI inference service
+- ✔ React prediction UI
+- ✔ Maintainable project structure
 
 You now have a fully operational end-to-end ML system.
 
