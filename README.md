@@ -43,12 +43,11 @@ This project implements a full **customer segmentation system** using clustering
 - Response formatting for frontend consumption  
 - Config-driven architecture
 
-### **✅ Backend API (FastAPI)**
-- REST endpoint `/predict` for real-time inference  
-- Input validation with Pydantic  
-- Modular services for prediction and persona mapping  
-- Response formatting for frontend consumption  
-- Config-driven architecture
+### **✅ Frontend App (React + Next.js + Tailwind)**
+- Responsive form UI for entering student metrics  
+- Sends data to FastAPI prediction endpoint  
+- Displays cluster + persona + explanation  
+- Clean, professional UI built with Tailwind
 
 ### **✅ Production-Ready Architecture**
 - Separation of concerns  
