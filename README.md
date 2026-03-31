@@ -6,6 +6,15 @@ This project implements a full **customer segmentation system** using clustering
 
 ---
 
+## Screenshots
+### Web Application Interface
+
+![SegemntIQ](screenshots/segment_iq_frontend_1.png)
+![SegemntIQ](screenshots/segment_iq_frontend_2.png)
+![SegemntIQ](screenshots/segment_iq_frontend_3.png)
+
+---
+
 ## Tech Stack
 - Python
 - Pandas
